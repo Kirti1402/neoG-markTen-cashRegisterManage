@@ -38,12 +38,6 @@ function nextButtonClickHandler() {
   if (inputBillAmt.value == "" || inputBillAmt.value <= 0) {
     hideShowCalc.style.visibility = "hidden";
     billErrorMessage.innerText = "Please enter value";
-    // const billAmtErrMsg=document.createElement("small");
-    // const content=document.createTextNode("Please enter correct value");
-    // billAmtErrMsg.appendChild(content);
-    // var currentelement=document.querySelector("#nxt-btn");
-    // console.log(currentelement);
-    // document.body.insertBefore(billAmtErrMsg,currentelement);
   } else if (inputBillAmt.value >= 0) {//if value is valid 
     billErrorMessage.innerText = "";//error message we set in invalid if setting it to none in valid state
     hideShowCalc.style.visibility = "visible";
@@ -53,11 +47,15 @@ function nextButtonClickHandler() {
 function calculateButtonClickHandler() {
   console.log("Clicked Calculate button");
   console.log("calculate value",inputCashAmount.value)
+
+  if(inputCashAmount.value == ''){
+    refundAmount_errorMessage.innerText ="Please enter cash amount to calculate.";
+  }
   var billAmount = parseInt(inputBillAmt.value);
   var cashAmount = parseInt(inputCashAmount.value);
+  console.log(typeof(cashAmount));
   var refundAmount = billAmount - cashAmount;
   var notesCountStore;
-//   var notesCountData = document.querySelector(".notes");
   if (billAmount > cashAmount && cashAmount>=0) {
     refundAmount_errorMessage.classList.remove("rfd-amt");
     refundAmount_errorMessage.classList.add("rfd-amt-err");
@@ -65,12 +63,10 @@ function calculateButtonClickHandler() {
       "You need " +
       refundAmount +
       " more cash from Customer to complete bill payment.";
-  }else if(cashAmount == " "){
-    refundAmount_errorMessage.innerText ="Please enter cash amount to calculate.";
-  } 
-  else if (billAmount == cashAmount) {
+  }else if (billAmount == cashAmount) {
+    refundAmount_errorMessage.classList.remove("rfd-amt-err");
     refundAmount_errorMessage.innerText = "Refund amount is: " + refundAmount;
-  }else if(cashAmount <=0){
+  }else if(cashAmount <=0 || cashAmount == ''){
     refundAmount_errorMessage.classList.add("rfd-amt-err");
  refundAmount_errorMessage.innerText = "Please enter value greater than 0";
 }
