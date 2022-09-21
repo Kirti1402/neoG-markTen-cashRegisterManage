@@ -64,6 +64,7 @@ label{
 
 
 button{
+  cursor: pointer;
     margin-top: 10px;
     border-radius:10px ;
     /* border-radius: 20px 100px 20px 100px; */
